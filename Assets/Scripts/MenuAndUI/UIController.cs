@@ -40,7 +40,7 @@ public class UIController : MonoBehaviour
         quickFindAbilityButton.onClick.AddListener(() => ChooseAbility(AbilityType.QuckFind));
         quickExperienceAbilityButton.onClick.AddListener(() => ChooseAbility(AbilityType.QuickExperience));
 
-        Observer.UIDataUpdateEvent += ChangeDataView;
+        Observer.UIDataUpdateEvent += UpdateDataView;
         Observer.AbilitySelectionEvent += OpenAbilitiesPanel;
 
         defenseValueText.text = "Защита: " + Data.CharacterDefense.ToString();
@@ -57,22 +57,33 @@ public class UIController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        timerText.text = Mathf.Round(CurrentGameSessionTime.time).ToString();
+        UpdateTimerView();
     }
 
     private void OnDestroy()
     {
-        Observer.UIDataUpdateEvent -= ChangeDataView;
+        Observer.UIDataUpdateEvent -= UpdateDataView;
         Observer.AbilitySelectionEvent -= OpenAbilitiesPanel;
     }
 
     /// <summary>
     /// Обновление текста панелей UI.
     /// </summary>
-    private void ChangeDataView()
+    private void UpdateDataView()
     {
         defenseValueText.text = "Защита: " + CharacterAttributes.defense.ToString();
         experienceValueText.text = "Опыт: " + CharacterAttributes.experience.ToString();
+    }
+
+    /// <summary>
+    /// Обновление текста панели таймера.
+    /// </summary>
+    private void UpdateTimerView()
+    {
+        var time = Mathf.Round(CurrentGameSessionTime.time);
+        float minutes = Mathf.FloorToInt(time / 60);
+        float seconds = Mathf.FloorToInt(time % 60);
+        timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }
 
     /// <summary>

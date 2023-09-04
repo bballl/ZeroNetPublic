@@ -56,5 +56,5 @@ internal struct Data
     public static readonly float QuickFindValue = 0.005f;
 
     //игровая сессия
-    public static readonly float GameSessionMaxTime = 570f;
+    public static readonly float GameSessionMaxTime = 300f;
 }
